@@ -1,0 +1,146 @@
+[
+  {
+    "type": "Transport",
+    "subtype": "Car Trip (Petrol)",
+    "factor": 0.192,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Car Trip (Diesel)",
+    "factor": 0.171,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Car Trip (Electric)",
+    "factor": 0.053,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Bus Trip",
+    "factor": 0.089,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Train Trip",
+    "factor": 0.041,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Flight (Domestic)",
+    "factor": 0.255,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Transport",
+    "subtype": "Flight (International)",
+    "factor": 0.195,
+    "unit": "kg CO2e/km"
+  },
+  {
+    "type": "Food",
+    "subtype": "Beef Meal",
+    "factor": 27.0,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Food",
+    "subtype": "Lamb Meal",
+    "factor": 39.2,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Food",
+    "subtype": "Pork Meal",
+    "factor": 12.1,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Food",
+    "subtype": "Chicken Meal",
+    "factor": 6.9,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Food",
+    "subtype": "Fish Meal",
+    "factor": 6.1,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Food",
+    "subtype": "Vegetarian Meal",
+    "factor": 1.0,
+    "unit": "kg CO2e/meal"
+  },
+  {
+    "type": "Food",
+    "subtype": "Vegan Meal",
+    "factor": 0.7,
+    "unit": "kg CO2e/meal"
+  },
+  {
+    "type": "Home Energy",
+    "subtype": "Electricity Use",
+    "factor": 0.42,
+    "unit": "kg CO2e/kWh"
+  },
+  {
+    "type": "Home Energy",
+    "subtype": "Natural Gas",
+    "factor": 0.184,
+    "unit": "kg CO2e/kWh"
+  },
+  {
+    "type": "Home Energy",
+    "subtype": "Heating Oil",
+    "factor": 0.245,
+    "unit": "kg CO2e/liter"
+  },
+  {
+    "type": "Home Energy",
+    "subtype": "Coal Heating",
+    "factor": 0.354,
+    "unit": "kg CO2e/kWh"
+  },
+  {
+    "type": "Shopping",
+    "subtype": "New Clothing",
+    "factor": 33.4,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Shopping",
+    "subtype": "Electronics",
+    "factor": 300.0,
+    "unit": "kg CO2e/item"
+  },
+  {
+    "type": "Shopping",
+    "subtype": "Books/Paper",
+    "factor": 1.3,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Waste",
+    "subtype": "General Waste",
+    "factor": 0.57,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Waste",
+    "subtype": "Recycling",
+    "factor": 0.21,
+    "unit": "kg CO2e/kg"
+  },
+  {
+    "type": "Waste",
+    "subtype": "Food Waste",
+    "factor": 3.3,
+    "unit": "kg CO2e/kg"
+  }
+] 
