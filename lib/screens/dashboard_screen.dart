@@ -30,7 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   /// Load all dashboard data
   Future<void> _loadDashboardData() async {
     setState(() => _isLoading = true);
-    
+
     try {
       await _loadFootprintSummary();
       await _loadDailyData();
@@ -42,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
       }
     }
-    
+
     if (mounted) {
       setState(() => _isLoading = false);
     }
@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final now = DateTime.now();
     final weekStart = now.subtract(Duration(days: now.weekday - 1));
     final monthStart = DateTime(now.year, now.month, 1);
-    
+
     _totalFootprint = await _databaseService.getTotalCarbonFootprint();
     _weeklyFootprint = await _databaseService.getTotalCarbonFootprint(
       start: weekStart,
@@ -69,13 +69,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _loadDailyData() async {
     final now = DateTime.now();
     DateTime startDate;
-    
+
     if (_selectedPeriod == 'Week') {
       startDate = now.subtract(const Duration(days: 7));
     } else {
       startDate = now.subtract(const Duration(days: 30));
     }
-    
+
     _dailyData = await _databaseService.getDailyCarbonFootprint(
       start: startDate,
       end: now,
@@ -86,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _loadCategoryData() async {
     final now = DateTime.now();
     final startDate = now.subtract(const Duration(days: 30));
-    
+
     _categoryData = await _databaseService.getCarbonFootprintByType(
       start: startDate,
       end: now,
@@ -189,7 +189,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   /// Build individual summary card
-  Widget _buildSummaryCard(String title, double value, IconData icon, Color color) {
+  Widget _buildSummaryCard(
+      String title, double value, IconData icon, Color color) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -207,9 +208,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Text(
               '${value.toStringAsFixed(1)} kg',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
               textAlign: TextAlign.center,
             ),
             Text(
@@ -329,7 +330,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         showTitles: true,
                         reservedSize: 22,
                         getTitlesWidget: (value, meta) {
-                          final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+                          final date = DateTime.fromMillisecondsSinceEpoch(
+                              value.toInt());
                           return Text(
                             DateFormat('M/d').format(date),
                             style: const TextStyle(fontSize: 10),
@@ -337,8 +339,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         },
                       ),
                     ),
-                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false)),
+                    topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false)),
                   ),
                   borderData: FlBorderData(show: true),
                   lineBarsData: [
@@ -354,7 +358,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       dotData: const FlDotData(show: true),
                       belowBarData: BarAreaData(
                         show: true,
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withValues(alpha: 0.2),
                       ),
                     ),
                   ],
@@ -406,7 +412,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: PieChart(
                       PieChartData(
                         sections: _categoryData.entries
@@ -425,15 +431,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
-                            radius: 60,
+                            radius: 50,
                           );
                         }).toList(),
                         sectionsSpace: 2,
-                        centerSpaceRadius: 40,
+                        centerSpaceRadius: 30,
                       ),
                     ),
                   ),
+                  const SizedBox(width: 16),
                   Expanded(
+                    flex: 2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,7 +453,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         final index = entry.key;
                         final categoryEntry = entry.value;
                         return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2),
+                          padding: const EdgeInsets.symmetric(vertical: 3),
                           child: Row(
                             children: [
                               Container(
@@ -453,11 +461,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 12,
                                 color: colors[index % colors.length],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   categoryEntry.key,
-                                  style: const TextStyle(fontSize: 10),
+                                  style: const TextStyle(fontSize: 11),
                                 ),
                               ),
                             ],
@@ -474,4 +482,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-} 
+}

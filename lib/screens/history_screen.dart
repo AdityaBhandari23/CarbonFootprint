@@ -19,8 +19,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
   String _selectedFilter = 'All';
   String _selectedPeriod = 'All Time';
 
-  final List<String> _filterOptions = ['All', 'Transport', 'Food', 'Home Energy', 'Shopping', 'Waste'];
-  final List<String> _periodOptions = ['All Time', 'This Week', 'This Month', 'Last 30 Days'];
+  final List<String> _filterOptions = [
+    'All',
+    'Transport',
+    'Food',
+    'Home Energy',
+    'Shopping',
+    'Waste'
+  ];
+  final List<String> _periodOptions = [
+    'All Time',
+    'This Week',
+    'This Month',
+    'Last 30 Days'
+  ];
 
   @override
   void initState() {
@@ -31,7 +43,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   /// Load activities from database
   Future<void> _loadActivities() async {
     setState(() => _isLoading = true);
-    
+
     try {
       _activities = await _databaseService.readAllActivities();
       _applyFilters();
@@ -42,7 +54,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         );
       }
     }
-    
+
     if (mounted) {
       setState(() => _isLoading = false);
     }
@@ -54,7 +66,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     // Apply type filter
     if (_selectedFilter != 'All') {
-      filtered = filtered.where((activity) => activity.type == _selectedFilter).toList();
+      filtered = filtered
+          .where((activity) => activity.type == _selectedFilter)
+          .toList();
     }
 
     // Apply period filter
@@ -62,15 +76,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
     switch (_selectedPeriod) {
       case 'This Week':
         final weekStart = now.subtract(Duration(days: now.weekday - 1));
-        filtered = filtered.where((activity) => activity.date.isAfter(weekStart)).toList();
+        filtered = filtered
+            .where((activity) => activity.date.isAfter(weekStart))
+            .toList();
         break;
       case 'This Month':
         final monthStart = DateTime(now.year, now.month, 1);
-        filtered = filtered.where((activity) => activity.date.isAfter(monthStart)).toList();
+        filtered = filtered
+            .where((activity) => activity.date.isAfter(monthStart))
+            .toList();
         break;
       case 'Last 30 Days':
         final thirtyDaysAgo = now.subtract(const Duration(days: 30));
-        filtered = filtered.where((activity) => activity.date.isAfter(thirtyDaysAgo)).toList();
+        filtered = filtered
+            .where((activity) => activity.date.isAfter(thirtyDaysAgo))
+            .toList();
         break;
     }
 
@@ -158,7 +178,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   /// Get total footprint for filtered activities
   double get _totalFilteredFootprint {
-    return _filteredActivities.fold(0.0, (sum, activity) => sum + activity.carbonFootprint);
+    return _filteredActivities.fold(
+        0.0, (sum, activity) => sum + activity.carbonFootprint);
   }
 
   @override
@@ -207,9 +228,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Text(
                     '${_filteredActivities.length}',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
                   ),
                   const Text('Activities'),
                 ],
@@ -220,9 +241,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Text(
                     '${_totalFilteredFootprint.toStringAsFixed(1)}',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
                   ),
                   const Text('kg CO₂e'),
                 ],
@@ -240,40 +261,34 @@ class _HistoryScreenState extends State<HistoryScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value: _selectedFilter,
-                  onChanged: (value) => _onFilterChanged(value!),
-                  decoration: const InputDecoration(
-                    labelText: 'Filter by Type',
-                    prefixIcon: Icon(Icons.filter_list),
-                    border: OutlineInputBorder(),
-                    isDense: true,
-                  ),
-                  items: _filterOptions.map((filter) {
-                    return DropdownMenuItem(value: filter, child: Text(filter));
-                  }).toList(),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value: _selectedPeriod,
-                  onChanged: (value) => _onPeriodChanged(value!),
-                  decoration: const InputDecoration(
-                    labelText: 'Filter by Period',
-                    prefixIcon: Icon(Icons.date_range),
-                    border: OutlineInputBorder(),
-                    isDense: true,
-                  ),
-                  items: _periodOptions.map((period) {
-                    return DropdownMenuItem(value: period, child: Text(period));
-                  }).toList(),
-                ),
-              ),
-            ],
+          // Filter by Type
+          DropdownButtonFormField<String>(
+            value: _selectedFilter,
+            onChanged: (value) => _onFilterChanged(value!),
+            decoration: const InputDecoration(
+              labelText: 'Filter by Type',
+              prefixIcon: Icon(Icons.filter_list),
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
+            items: _filterOptions.map((filter) {
+              return DropdownMenuItem(value: filter, child: Text(filter));
+            }).toList(),
+          ),
+          const SizedBox(height: 12),
+          // Filter by Period
+          DropdownButtonFormField<String>(
+            value: _selectedPeriod,
+            onChanged: (value) => _onPeriodChanged(value!),
+            decoration: const InputDecoration(
+              labelText: 'Filter by Period',
+              prefixIcon: Icon(Icons.date_range),
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
+            items: _periodOptions.map((period) {
+              return DropdownMenuItem(value: period, child: Text(period));
+            }).toList(),
           ),
           const SizedBox(height: 16),
         ],
@@ -301,8 +316,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Text(
             'Try adjusting your filters or log some activities',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.grey[600],
-            ),
+                  color: Colors.grey[600],
+                ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -479,7 +494,7 @@ class ActivityDetailModal extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          
+
           // Title
           Text(
             'Activity Details',
@@ -505,17 +520,20 @@ class ActivityDetailModal extends StatelessWidget {
                       Expanded(
                         child: Text(
                           activity.subtype,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   _buildDetailRow('Category', activity.type),
-                  _buildDetailRow('Value', '${activity.value} ${_getUnit(activity)}'),
-                  _buildDetailRow('Date', DateFormat('MMMM d, y • h:mm a').format(activity.date)),
+                  _buildDetailRow(
+                      'Value', '${activity.value} ${_getUnit(activity)}'),
+                  _buildDetailRow('Date',
+                      DateFormat('MMMM d, y • h:mm a').format(activity.date)),
                   const Divider(),
                   _buildDetailRow(
                     'Carbon Footprint',
@@ -556,7 +574,8 @@ class ActivityDetailModal extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, {bool isHighlighted = false}) {
+  Widget _buildDetailRow(String label, String value,
+      {bool isHighlighted = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -630,4 +649,4 @@ class ActivityDetailModal extends StatelessWidget {
         return '';
     }
   }
-} 
+}
